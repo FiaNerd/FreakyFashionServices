@@ -4,24 +4,28 @@ namespace FreakyFashionServices.CatalogService.Models.Domain
 {
     public class Product
     {
-        public Product(string name, string description, string imageUrl, int price)
-        {
-            Name = name;
-            Description = description;
-            ImageUrl = imageUrl;
-            Price = price;
-        }
+        //public Product(string name, string description, string imageUrl, int price, string urlSlug)
+        //{
+   
+        //    Name = name;
+        //    Description = description;
+        //    ImageUrl = imageUrl;
+        //    Price = price;
+        //    UrlSlug = urlSlug;
+        //}
+
 
         [Key]
+        public int Id { get; set; }
+
         public string Name { get; set; }
 
-        [Required]
         public string Description { get; set; }
 
-        [Required]
         public string ImageUrl { get; set; }
 
-        [Required]
         public int Price { get; set; }
+
+        public string? UrlSlug { get; set; }
     }
 }
