@@ -37,5 +37,36 @@ namespace FreakyFashionServices.CatalogService.Controllers
 
 
         }
+
+        [HttpGet]
+        public IEnumerable<ProductDto> GetAll()
+        {
+            var productDto = Context.Products.Select(p => new ProductDto
+            {
+                Id = p.Id,
+                Name = p.Name,
+                Description = p.Description,
+                ImageUrl = p.ImageUrl,
+                Price = p.Price,
+                UrlSlug = p.UrlSlug,
+            });
+
+            return productDto;
+        }
+
+        public class UpdateProductDto
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+
+            public string Description { get; set; }
+
+            public string ImageUrl { get; set; }
+
+            public int Price { get; set; }
+
+            public string UrlSlug { get; set; }
+
+        }
     }
 }
