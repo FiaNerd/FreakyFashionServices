@@ -1,4 +1,5 @@
-﻿namespace FreakyFashionServices.CatalogService.Controllers
+﻿namespace FreakyFashionServices.CatalogService.Models.Dto
+
 {
     public class ProductDto
     {
@@ -6,6 +7,5 @@
         public string Description { get; set; }
         public string ImageUrl { get; set; }
         public int Price { get; set; }
-        public string UrlSlug { get; set; }
     }
 }

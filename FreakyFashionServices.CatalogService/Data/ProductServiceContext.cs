@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore;
 
 namespace FreakyFashionServices.CatalogService.Data
 {
-    public class ProductContext : DbContext
+    public class ProductServiceContext : DbContext
     {
-        public DbSet<Product> Product { get; set; }
+        public DbSet<Product> Products { get; set; }
 
-        public ProductContext(DbContextOptions<ProductContext> options)
+        public ProductServiceContext(DbContextOptions<ProductServiceContext> options)
             : base(options)
         {
            

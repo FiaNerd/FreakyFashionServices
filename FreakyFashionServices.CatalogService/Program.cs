@@ -12,7 +12,7 @@ builder.Services.AddSwaggerGen();
 
 //context.Database.EnsureCreated()
 
-builder.Services.AddDbContext<ProductContext>(
+builder.Services.AddDbContext<ProductServiceContext>(
    options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
 
 var app = builder.Build();
