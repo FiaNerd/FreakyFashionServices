@@ -26,6 +26,8 @@ namespace FreakyFashionServices.CatalogService.Models.Domain
 
         public int Price { get; set; }
 
+        public string ArticleNumber { get; set; }
+
         public string? UrlSlug { get; set; }
     }
 }

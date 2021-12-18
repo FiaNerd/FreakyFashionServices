@@ -26,6 +26,7 @@ namespace FreakyFashionServices.CatalogService.Controllers
                 Description = products.Description,
                 ImageUrl = products.ImageUrl,
                 Price = products.Price,
+                ArticleNumber = products.ArticleNumber,
                 UrlSlug = urlSlug,
             };
 
@@ -39,34 +40,35 @@ namespace FreakyFashionServices.CatalogService.Controllers
         }
 
         [HttpGet]
-        public IEnumerable<ProductDto> GetAll()
+        public IEnumerable<ProductDto> GetProducts()
         {
             var productDto = Context.Products.Select(p => new ProductDto
             {
-                Id = p.Id,
+                //Id = p.Id,
                 Name = p.Name,
                 Description = p.Description,
                 ImageUrl = p.ImageUrl,
                 Price = p.Price,
-                UrlSlug = p.UrlSlug,
+                ArticleNumber = p.ArticleNumber,
+                UrlSlug= p.UrlSlug,
             });
 
             return productDto;
         }
 
-        public class UpdateProductDto
-        {
-            public int Id { get; set; }
-            public string Name { get; set; }
+        //public class UpdateProductDto
+        //{
+        //    public int Id { get; set; }
+        //    public string Name { get; set; }
 
-            public string Description { get; set; }
+        //    public string Description { get; set; }
 
-            public string ImageUrl { get; set; }
+        //    public string ImageUrl { get; set; }
 
-            public int Price { get; set; }
+        //    public int Price { get; set; }
 
-            public string UrlSlug { get; set; }
+        //    public string UrlSlug { get; set; }
 
-        }
+        //}
     }
 }
