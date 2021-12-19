@@ -44,7 +44,7 @@ namespace FreakyFashionServices.CatalogService.Controllers
         {
             var productDto = Context.Products.Select(p => new ProductDto
             {
-                //Id = p.Id,
+                Id = p.Id,
                 Name = p.Name,
                 Description = p.Description,
                 ImageUrl = p.ImageUrl,
