@@ -1,4 +1,5 @@
-﻿using FreakyFashionServices.BasketService.Models.Dto;
+﻿using FreakyFashionServices.BasketService.Models.Domain;
+using FreakyFashionServices.BasketService.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
@@ -9,19 +10,22 @@ namespace FreakyFashionServices.BasketService.Controllers
     [ApiController]
     public class BasketsController : ControllerBase
     {
+
+
+        private readonly IDistributedCache Cache;
+
+
         public BasketsController(IDistributedCache cache)
         {
             Cache = cache;
         }
 
-        public IDistributedCache Cache { get; }
-
         [HttpPut("{ordernumber}")]
-        public async Task<IActionResult> CreateReplaceBasket(BasketDto basketDto)
+        public async Task<IActionResult> CreateReplaceBasket(Basket basket)
         {
-            var serializedBasket = JsonSerializer.Serialize(basketDto);
+            var serializedBasket = JsonSerializer.Serialize(basket);
 
-            await Cache.SetStringAsync(basketDto.OrderNumber.ToString(), serializedBasket);
+            await Cache.SetStringAsync(basket.OrderNumber.ToString(), serializedBasket);
 
             return NoContent();
         }
