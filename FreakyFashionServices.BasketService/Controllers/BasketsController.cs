@@ -16,46 +16,28 @@ namespace FreakyFashionServices.BasketService.Controllers
 
         public IDistributedCache Cache { get; }
 
-        [HttpPut("{customernumber}")]
-        public async Task<IActionResult> CreateReplaceBasket(int customerNumber, BasketDto basketDto)
+        [HttpPut("{ordernumber}")]
+        public async Task<IActionResult> CreateReplaceBasket(BasketDto basketDto)
         {
-
             var serializedBasket = JsonSerializer.Serialize(basketDto);
 
-            await Cache.SetStringAsync(basketDto.CustomerNumber.ToString(), serializedBasket);
-
-            //if (customerNumber != basketDto.CustomerNumber)
-            //    return BadRequest();
-
-            //var existingCustomer = BasketDto.Get(customerNumber);
-
-            //if (existingCustomer == null)
-            //    return NotFound();
-
-            //basketDto.Update(customerNumber);
-
-
-            //var stockLevel = Context.Basket
-            //   .FirstOrDefault(x => x.ArticleNumber == basketDto.ArticleNumber);
-
-            //if (stockLevel == null)
-            //{
-            //    // Alternativt, använd AutoMapper
-            //    stockLevel = new StockLevel(
-            //        basketDto.ArticleNumber,
-            //        basketDto.StockLevel
-            //    );
-
-            //    Context.StockLevel.Add(stockLevel);
-            //}
-            //else
-            //{
-            //    stockLevel.Stock = basketDto.StockLevel;
-            //}
-
-            //Context.SaveChanges();
+            await Cache.SetStringAsync(basketDto.OrderNumber.ToString(), serializedBasket);
 
             return NoContent();
+        }
+
+
+        [HttpGet("{ordernumber}")]
+        public async Task<ActionResult<BasketDto>> GetBasket(int orderNumber)
+        {
+            var serializedBasket = await Cache.GetStringAsync(orderNumber.ToString());
+
+            if (serializedBasket == null)
+                return NotFound();
+
+            var basketDto = JsonSerializer.Deserialize<BasketDto>(serializedBasket);
+
+            return Ok(basketDto);
         }
     }
 }
