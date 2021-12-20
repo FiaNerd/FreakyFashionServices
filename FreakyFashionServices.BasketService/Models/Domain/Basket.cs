@@ -4,18 +4,16 @@ namespace FreakyFashionServices.BasketService.Models.Domain
 {
     public class Basket
     {
-        public Basket(int customerNumber, string productName, int price, int quantity)
+        public Basket(int orderNumber, int productId, int quantity)
         {
-            CustomerNumber = customerNumber;
-            ProductName = productName;
-            Price = price;
+            OrderNumber = orderNumber;
+            ProductId = productId;
             Quantity = quantity;
         }
 
         [Key]
-        public int CustomerNumber { get; set; }
-        public string ProductName { get; set; }
-        public int Price { get; set; }
+        public int OrderNumber { get; set; }
+        public int ProductId { get; set; }
         public int Quantity { get; set; }
     }
 }
