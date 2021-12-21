@@ -21,7 +21,7 @@ namespace FreakyFashionServices.BasketService.Controllers
         }
 
         [HttpPut("{ordernumber}")]
-        public async Task<IActionResult> CreateReplaceBasket(Basket basket)
+        public async Task<IActionResult> CreateReplaceBasket(BasketDto basket)
         {
             var serializedBasket = JsonSerializer.Serialize(basket);
 
