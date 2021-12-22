@@ -1,5 +1,4 @@
-﻿using FreakyFashionServices.BasketService.Models.Domain;
-using FreakyFashionServices.BasketService.Models.Dto;
+﻿using FreakyFashionServices.BasketService.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
@@ -21,7 +20,7 @@ namespace FreakyFashionServices.BasketService.Controllers
         }
 
         [HttpPut("{ordernumber}")]
-        public async Task<IActionResult> CreateReplaceBasket(Basket basket)
+        public async Task<IActionResult> CreateReplaceBasket(BasketDto basket)
         {
             var serializedBasket = JsonSerializer.Serialize(basket);
 
