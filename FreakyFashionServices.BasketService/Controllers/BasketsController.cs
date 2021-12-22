@@ -9,11 +9,7 @@ namespace FreakyFashionServices.BasketService.Controllers
     [ApiController]
     public class BasketsController : ControllerBase
     {
-
-
         private readonly IDistributedCache Cache;
-
-
         public BasketsController(IDistributedCache cache)
         {
             Cache = cache;

@@ -1,8 +1,9 @@
 ﻿namespace FreakyFashionServices.OrderService.Models.Dto
 {
-    public class OrderDto
+    public class BasketDto
     {
         public int OrderNumber { get; set; }
-        public string Customer { get; set; }
+
+        public List<Items> Items { get; set; } = new List<Items>();
     }
 }
