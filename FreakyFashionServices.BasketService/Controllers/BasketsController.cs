@@ -1,5 +1,4 @@
-﻿using FreakyFashionServices.BasketService.Models.Domain;
-using FreakyFashionServices.BasketService.Models.Dto;
+﻿using FreakyFashionServices.BasketService.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Caching.Distributed;
 using System.Text.Json;
