@@ -12,8 +12,6 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = builder.Configuration["ConnectionStrings:Redis"];
 });
 
-
-
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

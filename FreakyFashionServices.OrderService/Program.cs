@@ -13,6 +13,12 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<OrderServiceContext>(
    options => options.UseSqlServer("name=ConnectionStrings:DefaultConnection"));
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration["ConnectionStrings:Redis"];
+});
+
+
 // Add services to the container.
 builder.Services.AddHttpClient();
 
@@ -24,8 +30,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
-app.Run();
 
 app.UseAuthorization();
 
