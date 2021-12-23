@@ -26,16 +26,25 @@ namespace FreakyFashionServices.CatalogService.Controllers
                 Description = products.Description,
                 ImageUrl = products.ImageUrl,
                 Price = products.Price,
-                ArticleNumber = products.ArticleNumber,
+                ArticleNumber = products.ArticleNumber.ToLower(),
                 UrlSlug = urlSlug,
             };
 
-            Context.Products.Add(product);
+            bool articleExists = Context.Products.Any(x => x.ArticleNumber == products.ArticleNumber);
 
-            Context.SaveChanges();
+            if (ModelState.IsValid && !articleExists)
+            {
+                Context.Products.Add(product);
+
+                Context.SaveChanges();
+            }
+            else
+            {
+                return BadRequest("Articlenumber already exists.");
+
+            }
 
             return Created("", product);
-
 
         }
 
@@ -50,25 +59,10 @@ namespace FreakyFashionServices.CatalogService.Controllers
                 ImageUrl = p.ImageUrl,
                 Price = p.Price,
                 ArticleNumber = p.ArticleNumber,
-                UrlSlug= p.UrlSlug,
+                UrlSlug = p.UrlSlug,
             });
 
             return productDto;
         }
-
-        //public class UpdateProductDto
-        //{
-        //    public int Id { get; set; }
-        //    public string Name { get; set; }
-
-        //    public string Description { get; set; }
-
-        //    public string ImageUrl { get; set; }
-
-        //    public int Price { get; set; }
-
-        //    public string UrlSlug { get; set; }
-
-        //}
     }
 }
