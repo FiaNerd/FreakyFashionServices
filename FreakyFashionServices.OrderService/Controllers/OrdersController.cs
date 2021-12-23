@@ -54,7 +54,7 @@ namespace FreakyFashionServices.OrderService.Controllers
             Context.Order.Add(newOrder);
             await Context.SaveChangesAsync();
 
-            return Created("", newOrder.OrderId);
+            return Created("", $"orderId: {newOrder.OrderId}");
         }
     }
 }
