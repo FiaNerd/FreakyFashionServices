@@ -32,7 +32,7 @@ namespace FreakyFashionServices.BasketService.Controllers
             var serializedBasket = await Cache.GetStringAsync(orderNumber.ToString());
 
             if (serializedBasket == null)
-                return NotFound();
+                return NotFound("This ordernumber dosn't exist!");
 
             var basketDto = JsonSerializer.Deserialize<BasketDto>(serializedBasket);
 
