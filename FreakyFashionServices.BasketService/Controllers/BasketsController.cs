@@ -20,8 +20,8 @@ namespace FreakyFashionServices.BasketService.Controllers
         {
             var serializedBasket = JsonSerializer.Serialize(basket);
 
-            await Cache.SetStringAsync(basket.OrderNumber.ToString(), serializedBasket);
-
+                await Cache.SetStringAsync(basket.OrderNumber.ToString(), serializedBasket);
+          
             return NoContent();
         }
 
