@@ -44,7 +44,6 @@ namespace FreakyFashionServices.OrderService.Controllers
 
             var basket = JsonSerializer.Deserialize<BasketDto>(serializedProduct, serializeOptions);
 
-            var basketNumberList = "";
             var newOrder = new Order(order.OrderNumber, order.Customer);
    
             foreach (var item in basket.Items)
@@ -54,29 +53,11 @@ namespace FreakyFashionServices.OrderService.Controllers
 
             Context.Order.Add(newOrder);
             await Context.SaveChangesAsync();
-            return Created("", newOrder.OrderNumber);
 
+            return Created("", newOrder.OrderId);
         }
     }
 }
-
-
-        //[HttpPost]
-        //public async Task<ActionResult> CreateOrder(OrderDto orderDto)
-        //{
-        //    new HttpRequestMessage(HttpMethod.Get, "http://localhost:8000/api/basket/" + orderDto.OrderNumber);
-
-//    Order order = new Order(
-//            orderNumber: orderDto.OrderNumber,
-//            customer: orderDto.Customer
-//           );
-
-//    Context.Order.Add(order);
-
-//    await Context.SaveChangesAsync();
-
-//    return Created(" ", order.OrderId);
-//}
 
 
 
