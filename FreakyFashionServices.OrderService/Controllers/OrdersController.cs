@@ -3,9 +3,7 @@ using FreakyFashionServices.OrderService.Models.Domain;
 using FreakyFashionServices.OrderService.Models.Dto;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Net.Http.Headers;
-using System.Text;
 using System.Text.Json;
-using static System.Net.Mime.MediaTypeNames;
 
 namespace FreakyFashionServices.OrderService.Controllers
 {
@@ -23,41 +21,69 @@ namespace FreakyFashionServices.OrderService.Controllers
             Context = context;
         }
 
+
         [HttpPost]
-        public async Task<ActionResult<BasketDto>> CreateOrders(OrderDto order)
+        public async Task<IActionResult> CreateOrder(OrderDto orderDto)
         {
-            // GET api/catalog
-            var request = new HttpRequestMessage(HttpMethod.Get, "http://localhost:8000/api/baskets/" + order.OrderNumber);
+            var basketDto = await FetchBasket(orderDto.OrderNumber);
 
-            request.Headers.Add("Accept", "application/json");
+            var orderLines = basketDto.OrderLine.Select(x =>
+                new OrderLineDto
+                {
+                    ProductId = x.ProductId,
+                    Quantity = x.Quantity,
+                });
 
-            var client = httpClientFactory.CreateClient();
+            var newOrder = new Order(orderDto.OrderNumber, orderDto.Customer);
 
-            var response = await client.SendAsync(request);
-
-            var serializedProduct = await response.Content.ReadAsStringAsync();
-
-            var serializeOptions = new JsonSerializerOptions
+            foreach (var item in orderLines)
             {
-                PropertyNamingPolicy = JsonNamingPolicy.CamelCase,
-            };
+                var newOrderLineDto = new OrderLine
+                {
+                    ProductId = item.ProductId,
+                    Quantity = item.Quantity,
 
-            var basket = JsonSerializer.Deserialize<BasketDto>(serializedProduct, serializeOptions);
+                };
 
-            var newOrder = new Order(order.OrderNumber, order.Customer);
-   
-            foreach (var item in basket.Items)
-            {
-                newOrder.OrderLine += $"{item.ProductId} qty({item.Quantity}) , ";
-;            }
+                newOrder.OrderLine.Add(newOrderLineDto);
+            }
 
             Context.Order.Add(newOrder);
+
             await Context.SaveChangesAsync();
 
-            return Created("", $"orderId: {newOrder.OrderId}");
+            return Created("", new { orderid = newOrder.OrderId });
+        }
+
+            private async Task<BasketDto> FetchBasket(int ordernumber)
+            {
+                var request = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:8000/api/baskets/{ordernumber}")
+                {
+                    Headers = { { HeaderNames.Accept, "application/json" }, }
+                };
+
+                var httpClient = httpClientFactory.CreateClient();
+
+                using var response = await httpClient.SendAsync(request);
+
+                var orderLines = Enumerable.Empty<OrderLineDto>();
+
+                var serializedProduct = await response.Content.ReadAsStringAsync();
+
+                var serializeOptions = new JsonSerializerOptions { PropertyNameCaseInsensitive = true };
+
+                var basketDto = JsonSerializer.Deserialize<BasketDto>(serializedProduct);
+
+                return basketDto;
+            }
         }
     }
-}
+
+
+
+
+
+
 
 
 

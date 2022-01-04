@@ -33,16 +33,52 @@ namespace FreakyFashionServices.OrderService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("OrderLine")
-                        .IsRequired()
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<int>("OrderNumber")
                         .HasColumnType("int");
 
                     b.HasKey("OrderId");
 
                     b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("FreakyFashionServices.OrderService.Models.Domain.OrderLine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderLine");
+                });
+
+            modelBuilder.Entity("FreakyFashionServices.OrderService.Models.Domain.OrderLine", b =>
+                {
+                    b.HasOne("FreakyFashionServices.OrderService.Models.Domain.Order", "Order")
+                        .WithMany("OrderLine")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("FreakyFashionServices.OrderService.Models.Domain.Order", b =>
+                {
+                    b.Navigation("OrderLine");
                 });
 #pragma warning restore 612, 618
         }
