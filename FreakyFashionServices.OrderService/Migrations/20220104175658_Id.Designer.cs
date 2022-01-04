@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FreakyFashionServices.OrderService.Migrations
 {
     [DbContext(typeof(OrderServiceContext))]
-    [Migration("20211222190410_major-changes")]
-    partial class majorchanges
+    [Migration("20220104175658_Id")]
+    partial class Id
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -41,6 +41,46 @@ namespace FreakyFashionServices.OrderService.Migrations
                     b.HasKey("OrderId");
 
                     b.ToTable("Order");
+                });
+
+            modelBuilder.Entity("FreakyFashionServices.OrderService.Models.Domain.OrderLine", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int>("OrderId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("ProductId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Quantity")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("OrderId");
+
+                    b.ToTable("OrderLine");
+                });
+
+            modelBuilder.Entity("FreakyFashionServices.OrderService.Models.Domain.OrderLine", b =>
+                {
+                    b.HasOne("FreakyFashionServices.OrderService.Models.Domain.Order", "Order")
+                        .WithMany("OrderLine")
+                        .HasForeignKey("OrderId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Order");
+                });
+
+            modelBuilder.Entity("FreakyFashionServices.OrderService.Models.Domain.Order", b =>
+                {
+                    b.Navigation("OrderLine");
                 });
 #pragma warning restore 612, 618
         }

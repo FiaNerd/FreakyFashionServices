@@ -1,20 +1,28 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using FreakyFashionServices.OrderService.Models.Dto;
+using System.ComponentModel.DataAnnotations;
 
 namespace FreakyFashionServices.OrderService.Models.Domain
 {
     public class Order
     {
+        public Order(int orderNumber)
+        {
+            OrderNumber = orderNumber;
+        }
+
         public Order(int orderNumber, string customer)
         {
             OrderNumber = orderNumber;
             Customer = customer;
         }
 
+
         [Key]
         public int OrderId { get; set; }
         public int OrderNumber { get; set; }
         public string Customer { get; set; }
+        public IList<OrderLine> OrderLine { get; set; } = new List<OrderLine>();
+        //public IList<OrderLine> OrderLine { get; set; } = new List<OrderLine>();
 
-        public string OrderLine { get; set; }
     }
 }
