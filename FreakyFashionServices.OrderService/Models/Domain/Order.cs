@@ -5,24 +5,23 @@ namespace FreakyFashionServices.OrderService.Models.Domain
 {
     public class Order
     {
-        public Order(int orderNumber)
+        public Order(int customerId)
         {
-            OrderNumber = orderNumber;
+            CustomerId = customerId;
         }
 
-        public Order(int orderNumber, string customer)
+        public Order(int customerId, string customer)
         {
-            OrderNumber = orderNumber;
+            CustomerId = customerId;
             Customer = customer;
         }
 
 
         [Key]
         public int OrderId { get; set; }
-        public int OrderNumber { get; set; }
+        public int CustomerId { get; set; }
         public string Customer { get; set; }
         public IList<OrderLine> OrderLine { get; set; } = new List<OrderLine>();
-        //public IList<OrderLine> OrderLine { get; set; } = new List<OrderLine>();
 
     }
 }

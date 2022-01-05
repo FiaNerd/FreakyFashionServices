@@ -4,7 +4,7 @@
 
 namespace FreakyFashionServices.OrderService.Migrations
 {
-    public partial class Id : Migration
+    public partial class InitialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -14,7 +14,7 @@ namespace FreakyFashionServices.OrderService.Migrations
                 {
                     OrderId = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    OrderNumber = table.Column<int>(type: "int", nullable: false),
+                    CustomerId = table.Column<int>(type: "int", nullable: false),
                     Customer = table.Column<string>(type: "nvarchar(max)", nullable: false)
                 },
                 constraints: table =>

@@ -6,9 +6,8 @@ namespace FreakyFashionServices.OrderService.Models.Dto
 {
     public class BasketDto
     {
-        [JsonPropertyName("orderNumber")]
-        public int OrderNumber { get; set; }
- 
+        [JsonPropertyName("customerId")]
+        public int CustomerId { get; set; }
 
         [JsonPropertyName("items")]
         public IList<OrderLineDto> OrderLine { get; set; } = new List<OrderLineDto>();
