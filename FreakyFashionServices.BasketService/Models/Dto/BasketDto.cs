@@ -4,7 +4,7 @@ namespace FreakyFashionServices.BasketService.Models.Dto
 {
     public class BasketDto
     {
-        public int OrderNumber { get; set; }
+        public int CustomerId { get; set; }
 
         public List<Items> Items { get; set; } = new List<Items>();
     }

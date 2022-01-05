@@ -33,7 +33,7 @@ namespace FreakyFashionServices.OrderService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderNumber")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.HasKey("OrderId");

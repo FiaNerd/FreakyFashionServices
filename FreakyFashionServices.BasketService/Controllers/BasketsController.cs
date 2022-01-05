@@ -20,19 +20,19 @@ namespace FreakyFashionServices.BasketService.Controllers
         {
             var serializedBasket = JsonSerializer.Serialize(basket);
 
-                await Cache.SetStringAsync(basket.OrderNumber.ToString(), serializedBasket);
+                await Cache.SetStringAsync(basket.CustomerId.ToString(), serializedBasket);
           
             return NoContent();
         }
 
 
-        [HttpGet("{ordernumber}")]
-        public async Task<ActionResult<BasketDto>> GetBasket(int orderNumber)
+        [HttpGet("{customerId}")]
+        public async Task<ActionResult<BasketDto>> GetBasket(int customerId)
         {
-            var serializedBasket = await Cache.GetStringAsync(orderNumber.ToString());
+            var serializedBasket = await Cache.GetStringAsync(customerId.ToString());
 
             if (serializedBasket == null)
-                return NotFound("This ordernumber dosn't exist!");
+                return NotFound("This customerId dosn't exist!");
 
             var basketDto = JsonSerializer.Deserialize<BasketDto>(serializedBasket);
 

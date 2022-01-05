@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace FreakyFashionServices.OrderService.Migrations
 {
     [DbContext(typeof(OrderServiceContext))]
-    [Migration("20220104175658_Id")]
-    partial class Id
+    [Migration("20220105084442_InitialCreate")]
+    partial class InitialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -35,7 +35,7 @@ namespace FreakyFashionServices.OrderService.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("OrderNumber")
+                    b.Property<int>("CustomerId")
                         .HasColumnType("int");
 
                     b.HasKey("OrderId");

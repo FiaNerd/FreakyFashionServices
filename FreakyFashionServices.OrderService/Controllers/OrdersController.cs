@@ -25,7 +25,7 @@ namespace FreakyFashionServices.OrderService.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateOrder(OrderDto orderDto)
         {
-            var basketDto = await FetchBasket(orderDto.OrderNumber);
+            var basketDto = await FetchBasket(orderDto.CustomerId);
 
             var orderLines = basketDto.OrderLine.Select(x =>
                 new OrderLineDto
@@ -34,7 +34,7 @@ namespace FreakyFashionServices.OrderService.Controllers
                     Quantity = x.Quantity,
                 });
 
-            var newOrder = new Order(orderDto.OrderNumber, orderDto.Customer);
+            var newOrder = new Order(orderDto.CustomerId, orderDto.Customer);
 
             foreach (var item in orderLines)
             {
@@ -55,9 +55,9 @@ namespace FreakyFashionServices.OrderService.Controllers
             return Created("", new { orderid = newOrder.OrderId });
         }
 
-            private async Task<BasketDto> FetchBasket(int ordernumber)
+            private async Task<BasketDto> FetchBasket(int customerId)
             {
-                var request = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:8000/api/baskets/{ordernumber}")
+                var request = new HttpRequestMessage(HttpMethod.Get, $"http://localhost:8000/api/baskets/{customerId}")
                 {
                     Headers = { { HeaderNames.Accept, "application/json" }, }
                 };
