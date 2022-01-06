@@ -1,5 +1,4 @@
-﻿using FreakyFashionServices.OrderService.Models.Dto;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace FreakyFashionServices.OrderService.Models.Domain
 {
