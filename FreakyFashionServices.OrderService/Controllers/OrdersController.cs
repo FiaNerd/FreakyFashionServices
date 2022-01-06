@@ -48,11 +48,21 @@ namespace FreakyFashionServices.OrderService.Controllers
                 newOrder.OrderLine.Add(newOrderLineDto);
             }
 
-            Context.Order.Add(newOrder);
+            bool customerExists = Context.Order.Any(x => x.CustomerId == orderDto.CustomerId);
 
-            await Context.SaveChangesAsync();
+            if (ModelState.IsValid && !customerExists)
+            {
 
-            return Created("", new { orderid = newOrder.OrderId });
+                Context.Order.Add(newOrder);
+
+                await Context.SaveChangesAsync();
+            }
+            else
+            {
+                return BadRequest("There is already a customer with this id, try another customer id");
+            }
+
+            return Created(" ", new { orderId = newOrder.OrderId });
         }
 
             private async Task<BasketDto> FetchBasket(int customerId)
